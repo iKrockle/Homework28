@@ -27,3 +27,5 @@ bin/
 
 ### Mac OS ###
 .DS_Store
+/Homework27.iml
+/.idea/
