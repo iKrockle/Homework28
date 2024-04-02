@@ -11,24 +11,24 @@ public class StringListImplTest {
     }
     @org.junit.jupiter.api.Test
     void testAdd() {
-        String expectedVal = "Hello";
-        String actualVal = stringList.add("Hello");
+        Integer expectedVal = 21;
+        Integer actualVal = stringList.add(21);
         assertEquals(expectedVal,actualVal);
     }
 
     @org.junit.jupiter.api.Test
     void testAddWithIdx() {
-        String expectedVal = "World";
-        stringList.add("Hello");
-        String actualVal = stringList.add(1,"World");
+        Integer expectedVal = 23;
+        stringList.add(21);
+        Integer actualVal = stringList.add(1,23);
         assertEquals(expectedVal,actualVal);
     }
 
     @org.junit.jupiter.api.Test
     void testSet() {
-        String expectedVal = "World";
-        stringList.add("Hello");
-        String actualVal = stringList.set(0,"World");
+        Integer expectedVal = 23;
+        stringList.add(21);
+        Integer actualVal = stringList.set(0,23);
         assertEquals(expectedVal,actualVal);
     }
 
@@ -36,41 +36,42 @@ public class StringListImplTest {
     void testSetIOBException() {
         String expectedVal = "Указанный индекс не существует";
         Exception exception = assertThrows(IndexOutOfBoundsException.class,
-                () -> stringList.set(10,"World"));
+                () -> stringList.set(10,23));
         assertEquals(expectedVal,exception.getMessage());
     }
 
     @org.junit.jupiter.api.Test
     void testRemoveByItem() {
-        String expectedVal = "World";
-        stringList.add("Hello");
-        stringList.add("World");
-        String actualVal = stringList.remove("World");
+        Integer expectedVal = 23;
+        stringList.add(21);
+        stringList.add(23);
+        Integer a = 23;
+        Integer actualVal = stringList.remove(a);
         assertEquals(expectedVal,actualVal);
     }
 
     @org.junit.jupiter.api.Test
     void testRemoveByIdx() {
-        String expectedVal = "Hello";
-        stringList.add("Hello");
-        stringList.add("World");
-        String actualVal = stringList.remove(0);
+        Integer expectedVal = 21;
+        stringList.add(21);
+        stringList.add(23);
+        Integer actualVal = stringList.remove(0);
         assertEquals(expectedVal,actualVal);
     }
 
     @org.junit.jupiter.api.Test
     void testRemoveByItemItemNotFoundException() {
         String expectedVal = "Указанный элемент не найден";
-        stringList.add("Hello");
+        stringList.add(21);
         Exception exception = assertThrows(ItemNotFoundException.class,
-                () -> stringList.remove("Ghost"));
+                () -> stringList.remove((Integer) 222));
         assertEquals(expectedVal,exception.getMessage());
     }
 
     @org.junit.jupiter.api.Test
     void testRemoveByIdxIOBException() {
         String expectedVal = "Указанный индекс не существует";
-        stringList.add("Hello");
+        stringList.add(21);
         Exception exception = assertThrows(IndexOutOfBoundsException.class,
                 () -> stringList.remove(2));
         assertEquals(expectedVal,exception.getMessage());
@@ -79,46 +80,46 @@ public class StringListImplTest {
     @org.junit.jupiter.api.Test
     void containsTest() {
         Boolean expectedVal = true;
-        stringList.add("Hello");
-        stringList.add("World");
-        Boolean actualVal = stringList.contains("Hello");
+        stringList.add(21);
+        stringList.add(23);
+        Boolean actualVal = stringList.contains(21);
         assertEquals(expectedVal,actualVal);
     }
 
     @org.junit.jupiter.api.Test
     void indexOfTest() {
         int expectedVal = 1;
-        stringList.add("Hello");
-        stringList.add("World");
-        stringList.add("World");
-        int actualVal = stringList.indexOf("World");
+        stringList.add(21);
+        stringList.add(23);
+        stringList.add(23);
+        int actualVal = stringList.indexOf(23);
         assertEquals(expectedVal,actualVal);
     }
 
     @org.junit.jupiter.api.Test
     void lastIndexOfTest() {
         int expectedVal = 2;
-        stringList.add("Hello");
-        stringList.add("World");
-        stringList.add("World");
-        int actualVal = stringList.lastIndexOf("World");
+        stringList.add(21);
+        stringList.add(23);
+        stringList.add(23);
+        int actualVal = stringList.lastIndexOf(23);
         assertEquals(expectedVal,actualVal);
     }
 
     @org.junit.jupiter.api.Test
     void getTest() {
-        String expectedVal = "World";
-        stringList.add("Hello");
-        stringList.add("World");
-        stringList.add("World");
-        String actualVal = stringList.get(2);
+        Integer expectedVal = 23;
+        stringList.add(21);
+        stringList.add(23);
+        stringList.add(23);
+        Integer actualVal = stringList.get(2);
         assertEquals(expectedVal,actualVal);
     }
 
     @org.junit.jupiter.api.Test
     void getTestIOBException() {
         String expectedVal = "Указанный индекс не существует";
-        stringList.add("Hello");
+        stringList.add(21);
         Exception exception = assertThrows(IndexOutOfBoundsException.class,
                 () -> stringList.get(2));
         assertEquals(expectedVal,exception.getMessage());
@@ -126,11 +127,11 @@ public class StringListImplTest {
 
     @org.junit.jupiter.api.Test
     void equalsTest() {
-        stringList.add("Hello");
-        stringList.add("World");
+        stringList.add(21);
+        stringList.add(23);
         StringListImpl scndStringList  = new StringListImpl(1);
-        scndStringList.add("Hello");
-        scndStringList.add("World");
+        scndStringList.add(21);
+        scndStringList.add(23);
         Boolean expectedVal = true;
         Boolean actualVal = stringList.equals(scndStringList);
         assertEquals(expectedVal,actualVal);
@@ -139,9 +140,9 @@ public class StringListImplTest {
     @org.junit.jupiter.api.Test
     void sizeTest() {
         int expectedVal = 3;
-        stringList.add("Hello");
-        stringList.add("World");
-        stringList.add("World");
+        stringList.add(21);
+        stringList.add(23);
+        stringList.add(23);
         int actualVal = stringList.size();
         assertEquals(expectedVal,actualVal);
     }
@@ -156,9 +157,9 @@ public class StringListImplTest {
     @org.junit.jupiter.api.Test
     void clearTest() {
         Boolean expectedVal = true;
-        stringList.add("Hello");
-        stringList.add("World");
-        stringList.add("World");
+        stringList.add(21);
+        stringList.add(23);
+        stringList.add(23);
         stringList.clear();
         Boolean actualVal = stringList.isEmpty();
         assertEquals(expectedVal,actualVal);
@@ -166,11 +167,11 @@ public class StringListImplTest {
 
     @org.junit.jupiter.api.Test
     void toArray() {
-        String[] expectedVal = {"Hello","World","World"};
-        stringList.add("Hello");
-        stringList.add("World");
-        stringList.add("World");
-        String[] actualVal = stringList.toArray();
+        Integer[] expectedVal = {21,23,23};
+        stringList.add(21);
+        stringList.add(23);
+        stringList.add(23);
+        Integer[] actualVal = stringList.toArray();
         assertArrayEquals(expectedVal,actualVal);
     }
 }

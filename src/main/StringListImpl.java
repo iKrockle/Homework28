@@ -3,19 +3,19 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Arrays;
 
 public class StringListImpl implements StringList {
-    private String[] stringArr;
+    private Integer[] stringArr;
     public StringListImpl(int len) {
-        stringArr = new String[len];
+        stringArr = new Integer[len];
     }
 
     private void increaceLen(){
-        String[] newStringArr = stringArr;
-        stringArr = new String[stringArr.length+1];
+        Integer[] newStringArr = stringArr;
+        stringArr = new Integer[stringArr.length+1];
         System.arraycopy(newStringArr, 0, stringArr, 0, newStringArr.length);
     }
 
     @Override
-    public String add(String item) {
+    public Integer add(Integer item) {
         Integer index = null;
         for (int i=0;i<stringArr.length;i++){
             if (stringArr[i]==null) {
@@ -34,7 +34,7 @@ public class StringListImpl implements StringList {
     }
 
     @Override
-    public String add(int index, String item) {
+    public Integer add(int index, Integer item) {
         if (stringArr[stringArr.length-1]!=null){
             increaceLen();
         }
@@ -46,7 +46,7 @@ public class StringListImpl implements StringList {
     }
 
     @Override
-    public String set(int index, String item) {
+    public Integer set(int index, Integer item) {
         if (index>stringArr.length-1){
             throw new IndexOutOfBoundsException("Указанный индекс не существует");
         }
@@ -55,7 +55,7 @@ public class StringListImpl implements StringList {
     }
 
     @Override
-    public String remove(String item) throws ItemNotFoundException {
+    public Integer remove(Integer item) throws ItemNotFoundException {
         int index = -1;
         for (int i=0;i<stringArr.length;i++){
             if (stringArr[i].equals(item)){
@@ -76,11 +76,11 @@ public class StringListImpl implements StringList {
     }
 
     @Override
-    public String remove(int index) {
+    public Integer remove(int index) {
         if (index>stringArr.length-1){
             throw new IndexOutOfBoundsException("Указанный индекс не существует");
         }
-        String item = stringArr[index];
+        Integer item = stringArr[index];
         for (int i=index;i<stringArr.length-1;i++){
             stringArr[i] = stringArr[i+1];
         }
@@ -89,8 +89,8 @@ public class StringListImpl implements StringList {
     }
 
     @Override
-    public boolean contains(String item) {
-        for (String s : stringArr) {
+    public boolean contains(Integer item) {
+        for (Integer s : stringArr) {
             if (s!=null) {
                 if (s.equals(item)) {
                     return true;
@@ -101,7 +101,7 @@ public class StringListImpl implements StringList {
     }
 
     @Override
-    public int indexOf(String item) {
+    public int indexOf(Integer item) {
         int index = -1;
         for (int i=0;i<stringArr.length;i++){
             if (stringArr[i]!=null) {
@@ -115,7 +115,7 @@ public class StringListImpl implements StringList {
     }
 
     @Override
-    public int lastIndexOf(String item) {
+    public int lastIndexOf(Integer item) {
         int index = -1;
         for (int i=stringArr.length-1;i>=0;i--){
             if (stringArr[i]!=null) {
@@ -129,7 +129,7 @@ public class StringListImpl implements StringList {
     }
 
     @Override
-    public String get(int index) {
+    public Integer get(int index) {
         if (index>stringArr.length-1){
             throw new IndexOutOfBoundsException("Указанный индекс не существует");
         }
@@ -164,8 +164,47 @@ public class StringListImpl implements StringList {
     }
 
     @Override
-    public String[] toArray() {
-        String[] newStringArr = stringArr;
+    public Integer[] toArray() {
+        Integer[] newStringArr = stringArr;
         return newStringArr;
+    }
+
+    private static Integer[] sortInsertion(Integer[] arr) {
+        for (int i = 1; i < arr.length; i++) {
+            int temp = arr[i];
+            int j = i;
+            while (j > 0 && arr[j - 1] >= temp) {
+                arr[j] = arr[j - 1];
+                j--;
+            }
+            arr[j] = temp;
+        }
+        return arr;
+    }
+
+    int binarySearch(int element) {
+        // в начале левая и правая границы равны первому и последнему элементу массива
+        Integer[] sortedArray = sortInsertion(stringArr);
+        var left = 0;
+        var right = sortedArray.length - 1;
+        // пока левая и правая границы поиска не пересеклись
+        while (left <= right) {
+            // индекс текущего элемента находится посередине
+            var middle = (left + right) / 2;
+            var current = sortedArray[middle];
+
+            if (current == element) {
+                // нашли элемент - возвращаем его индекс
+                return middle;
+            } else if (current < element) {
+                // текущий элемент меньше искомого - сдвигаем левую границу
+                left = middle + 1;
+            } else {
+                // иначе сдвигаем правую границу
+                right = middle - 1;
+            }
+        }
+        // проверили весь массив, но не нашли элемент
+        return -1;
     }
 }
