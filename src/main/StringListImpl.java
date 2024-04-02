@@ -8,9 +8,9 @@ public class StringListImpl implements StringList {
         stringArr = new Integer[len];
     }
 
-    private void increaceLen(){
+    private void grow(){
         Integer[] newStringArr = stringArr;
-        stringArr = new Integer[stringArr.length+1];
+        stringArr = new Integer[(int) (stringArr.length*1.5)];
         System.arraycopy(newStringArr, 0, stringArr, 0, newStringArr.length);
     }
 
@@ -27,7 +27,7 @@ public class StringListImpl implements StringList {
             stringArr[index] = item;
         }
         else {
-            increaceLen();
+            grow();
             add(item);
         }
         return item;
@@ -36,7 +36,7 @@ public class StringListImpl implements StringList {
     @Override
     public Integer add(int index, Integer item) {
         if (stringArr[stringArr.length-1]!=null){
-            increaceLen();
+            grow();
         }
         for (int i=stringArr.length-1;i>index;i--){
                 stringArr[i] = stringArr[i-1];
@@ -175,9 +175,41 @@ public class StringListImpl implements StringList {
         return arr;
     }
 
+    private Integer[] quickSort(Integer[] arr, int begin, int end) {
+        if (begin < end) {
+            int partitionIndex = partition(arr, begin, end);
+
+            quickSort(arr, begin, partitionIndex - 1);
+            quickSort(arr,partitionIndex + 1, end);
+        }
+        return arr;
+    }
+
+    private static int partition(Integer[] arr, int begin, int end) {
+        int pivot = arr[end];
+        int i = (begin - 1);
+
+        for (int j = begin; j < end; j++) {
+            if (arr[j] <= pivot) {
+                i++;
+
+                swapElements(arr, i, j);
+            }
+        }
+
+        swapElements(arr, i + 1, end);
+        return i + 1;
+    }
+
+    private static void swapElements(Integer[] arr, int left, int right) {
+        int temp = arr[left];
+        arr[left] = arr[right];
+        arr[right] = temp;
+    }
+
     boolean binarySearch(Integer element) {
         // в начале левая и правая границы равны первому и последнему элементу массива
-        Integer[] sortedArray = sortInsertion(stringArr);
+        Integer[] sortedArray = quickSort(stringArr,0,stringArr.length-1);
         var left = 0;
         var right = sortedArray.length - 1;
         // пока левая и правая границы поиска не пересеклись
