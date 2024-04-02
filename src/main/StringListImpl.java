@@ -90,14 +90,7 @@ public class StringListImpl implements StringList {
 
     @Override
     public boolean contains(Integer item) {
-        for (Integer s : stringArr) {
-            if (s!=null) {
-                if (s.equals(item)) {
-                    return true;
-                }
-            }
-        }
-        return false;
+        return binarySearch(item);
     }
 
     @Override
@@ -182,7 +175,7 @@ public class StringListImpl implements StringList {
         return arr;
     }
 
-    int binarySearch(int element) {
+    boolean binarySearch(Integer element) {
         // в начале левая и правая границы равны первому и последнему элементу массива
         Integer[] sortedArray = sortInsertion(stringArr);
         var left = 0;
@@ -193,9 +186,9 @@ public class StringListImpl implements StringList {
             var middle = (left + right) / 2;
             var current = sortedArray[middle];
 
-            if (current == element) {
+            if (current.equals(element)) {
                 // нашли элемент - возвращаем его индекс
-                return middle;
+                return true;
             } else if (current < element) {
                 // текущий элемент меньше искомого - сдвигаем левую границу
                 left = middle + 1;
@@ -205,6 +198,6 @@ public class StringListImpl implements StringList {
             }
         }
         // проверили весь массив, но не нашли элемент
-        return -1;
+        return false;
     }
 }
